@@ -7,7 +7,7 @@
 <meta name="description" content="Four real-time 3D worlds running in a browser: a Swedish archipelago, a procedural shooter, a synthwave arcade grid, and the Megève ski domain. Built with Three.js and WebGL2." />
 <meta property="og:title" content="KANNIGTHA — worlds built in a browser" />
 <meta property="og:description" content="Four real-time 3D worlds running in a browser. No installs, no downloads." />
-<meta property="og:image" content="/shots/skargard.jpg" />
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/javieranta/kannigtha@main/shots/skargard.jpg" />
 <meta name="theme-color" content="#07090d" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
 <style>
@@ -250,6 +250,15 @@
     },
   ];
 
+  /**
+   * Screenshots are served from jsDelivr, which mirrors the public GitHub repo.
+   * That keeps the deployable surface to this one file, so the identical HTML
+   * works unchanged from the repo, from GitHub Pages and from Vercel — and the
+   * images come off a CDN either way. Swap to '/shots/' if you ever wire Vercel
+   * to the repo directly and want it fully self-hosted.
+   */
+  const CDN = 'https://cdn.jsdelivr.net/gh/javieranta/kannigtha@main/shots/';
+
   const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
   document.getElementById('list').innerHTML = GAMES.map((g, i) => `
@@ -257,7 +266,7 @@
       <div class="game-inner">
         <div class="shot">
           <span class="badge ${g.live ? '' : 'soon'}"><b></b>${g.live ? 'Live' : 'Coming soon'}</span>
-          <img src="/shots/${g.id}.jpg" alt="${g.name} gameplay" loading="lazy" decoding="async" width="1280" height="720">
+          <img src="${CDN}${g.id}.jpg" alt="${g.name} gameplay" loading="lazy" decoding="async" width="1280" height="720">
         </div>
         <div class="copy">
           <div class="num">${String(i + 1).padStart(2, '0')} / 04</div>
