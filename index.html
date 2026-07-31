@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>KANNIGTHA — worlds built in a browser</title>
+<title>KAN-NIGHTA — worlds built in a browser</title>
 <meta name="description" content="Four real-time 3D worlds running in a browser: a Swedish archipelago, a procedural shooter, a synthwave arcade grid, and the Megève ski domain. Built with Three.js and WebGL2." />
-<meta property="og:title" content="KANNIGTHA — worlds built in a browser" />
+<meta property="og:title" content="KAN-NIGHTA — worlds built in a browser" />
 <meta property="og:description" content="Four real-time 3D worlds running in a browser. No installs, no downloads." />
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/javieranta/kannigtha@main/shots/skargard.jpg" />
+<meta property="og:image" content="shots/skargard.jpg" />
 <meta name="theme-color" content="#07090d" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
 <style>
@@ -63,9 +63,10 @@
     margin-bottom:26px;display:flex;align-items:center;gap:12px}
   .eyebrow::after{content:"";height:1px;width:70px;background:linear-gradient(90deg,var(--amber),transparent)}
   h1{font-family:var(--f-dis);font-weight:700;text-transform:uppercase;
-    font-size:clamp(52px,13vw,168px);line-height:.88;letter-spacing:-.015em;margin-bottom:30px}
+    font-size:clamp(46px,11.5vw,150px);line-height:.88;letter-spacing:-.015em;margin-bottom:30px}
   h1 span{display:inline-block;opacity:0;transform:translateY(.34em) rotate(2deg);
     animation:rise .9s cubic-bezier(.19,1,.22,1) forwards}
+  h1 .hy{color:var(--amber)}
   @keyframes rise{to{opacity:1;transform:none}}
   .lede{max-width:620px;font-size:clamp(16px,2vw,19px);color:var(--dim);
     opacity:0;animation:fade 1s ease .75s forwards}
@@ -100,10 +101,12 @@
     .games{gap:72px}
   }
 
-  .shot{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);
-    background:var(--bg-2);aspect-ratio:16/9;
+  /* The still is itself a link to the game — see the note in the script. */
+  .shot{position:relative;display:block;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);background:var(--bg-2);aspect-ratio:16/9;cursor:pointer;
     box-shadow:0 30px 70px -30px rgba(0,0,0,.9);
     transform-style:preserve-3d;transition:transform .5s cubic-bezier(.19,1,.22,1),border-color .4s}
+  .shot:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
   .shot img{width:100%;height:100%;object-fit:cover;display:block;
     transform:scale(1.03);transition:transform 1.1s cubic-bezier(.19,1,.22,1),filter .6s;
     filter:saturate(1.02)}
@@ -114,18 +117,29 @@
   .game:hover .shot img{transform:scale(1.09);filter:saturate(1.12)}
   .game:hover .shot::after{opacity:.5}
 
+  /* "Play" chip that fades up over the still on hover, so it is obvious the
+     image is clickable and not just decoration. */
+  .play-hint{position:absolute;right:16px;bottom:16px;z-index:2;
+    display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:100px;
+    font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+    background:rgba(242,245,249,.94);color:#07090d;
+    opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+  .game:hover .play-hint{opacity:1;transform:none}
+  .play-hint svg{width:12px;height:12px}
+  @media(hover:none){.play-hint{opacity:1;transform:none}}
+
   .badge{position:absolute;top:16px;left:16px;z-index:2;display:inline-flex;align-items:center;gap:7px;
     padding:6px 12px;border-radius:100px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
     background:rgba(7,9,13,.76);backdrop-filter:blur(8px);border:1px solid var(--line)}
   .badge b{width:6px;height:6px;border-radius:50%;background:var(--live);
     box-shadow:0 0 0 0 rgba(95,211,154,.6);animation:ping 2.4s ease-out infinite}
-  .badge.soon{color:var(--dim)}
-  .badge.soon b{background:var(--amber);animation:none}
   @keyframes ping{0%{box-shadow:0 0 0 0 rgba(95,211,154,.55)}70%{box-shadow:0 0 0 9px rgba(95,211,154,0)}100%{box-shadow:0 0 0 0 rgba(95,211,154,0)}}
 
   .num{font-family:var(--f-dis);font-size:12px;letter-spacing:.3em;color:var(--faint);margin-bottom:14px}
   .game h3{font-family:var(--f-dis);font-weight:700;text-transform:uppercase;
     font-size:clamp(30px,4.4vw,52px);line-height:.98;letter-spacing:-.005em;margin-bottom:8px}
+  .game h3 a{transition:color .3s}
+  .game h3 a:hover{color:var(--amber)}
   .tagline{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);margin-bottom:18px}
   .game p{color:var(--dim);font-size:15.5px;margin-bottom:20px;max-width:46ch}
   .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
@@ -135,16 +149,13 @@
     text-transform:uppercase;font-weight:600;padding:13px 22px;border-radius:100px;
     border:1px solid rgba(255,255,255,.22);transition:all .32s}
   .cta:hover{background:var(--ink);color:var(--bg);border-color:var(--ink);gap:16px}
-  .cta.dead{opacity:.42;pointer-events:none;border-style:dashed}
   .cta svg{width:13px;height:13px;transition:transform .32s}
   .cta:hover svg{transform:translateX(3px)}
 
   /* --------------------------------- footer ----------------------------- */
   footer{border-top:1px solid var(--line);padding:52px 0 64px;color:var(--faint);font-size:12.5px}
   .foot{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:center}
-  .foot a{color:var(--dim);transition:color .25s}
-  .foot a:hover{color:var(--ink)}
-  .note{margin-top:20px;font-size:11.5px;color:var(--faint);max-width:60ch;line-height:1.7}
+  .note{margin-top:18px;font-size:11.5px;color:var(--faint);max-width:64ch;line-height:1.7}
 
   @media (prefers-reduced-motion: reduce){
     *,*::after,*::before{animation:none!important;transition-duration:.01ms!important}
@@ -160,12 +171,8 @@
 <div class="grain"></div>
 
 <header id="hdr"><div class="wrap nav">
-  <div class="brand">KANNIG<i>THA</i></div>
-  <nav class="nav-links">
-    <a href="#games">Games</a>
-    <a href="#about">About</a>
-    <a href="https://github.com/javieranta" target="_blank" rel="noopener">GitHub</a>
-  </nav>
+  <div class="brand">KAN<i>-</i>NIGHTA</div>
+  <nav class="nav-links"><a href="#games">Games</a></nav>
 </div></header>
 
 <main>
@@ -179,8 +186,8 @@
     </p>
     <div class="stats">
       <div class="stat"><div class="n">4</div><div class="l">Worlds</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">Playable now</div></div>
       <div class="stat"><div class="n">0</div><div class="l">Installs</div></div>
-      <div class="stat"><div class="n">60<span style="font-size:18px">fps</span></div><div class="l">Target</div></div>
       <div class="stat"><div class="n">100%</div><div class="l">Browser</div></div>
     </div>
     <div class="scroll-cue">Scroll</div>
@@ -190,93 +197,73 @@
     <div class="section-head"><h2>The Collection</h2><span class="count">04 titles</span></div>
     <div class="games" id="list"></div>
   </div></section>
-
-  <section id="about"><div class="wrap">
-    <div class="section-head"><h2>About</h2><span class="count">Colophon</span></div>
-    <p class="lede" style="animation:none;opacity:1;max-width:70ch">
-      Every title here is built on <b>Three.js and WebGL2</b>, rendered in real time in the
-      browser. Two are built from <b>real open geodata</b> — IGN LiDAR elevation and
-      OpenStreetMap — so the terrain you ski and fly is the actual shape of the ground.
-      One generates every texture, mesh and sound procedurally in code, with no external
-      assets at all.
-    </p>
-    <p class="note">
-      Best on a desktop browser with a discrete GPU — Chrome or Edge. These are real-time
-      renderers, not videos: first load compiles shaders and generates textures, so give
-      them a moment. Touch controls are not implemented, so a phone will render but not play.
-    </p>
-  </div></section>
 </main>
 
 <footer><div class="wrap">
-  <div class="foot">
-    <div>© <span id="yr"></span> Kannigtha — built with Three.js</div>
-    <div><a href="https://github.com/javieranta" target="_blank" rel="noopener">github.com/javieranta</a></div>
-  </div>
+  <div class="foot"><div>© <span id="yr"></span> Kan-Nighta — built with Three.js</div></div>
+  <p class="note">
+    Best on a desktop browser with a discrete GPU — Chrome or Edge. These are real-time
+    renderers, not videos: the first load compiles shaders and generates textures, so give
+    them a moment. Touch controls are not implemented, so a phone will render but not play.
+  </p>
 </div></footer>
 
 <script>
-  /* ---- hero title, letter by letter ---- */
-  const TITLE = 'KANNIGTHA';
-  document.getElementById('title').innerHTML = [...TITLE]
-    .map((c, i) => `<span style="animation-delay:${0.06 * i + 0.15}s">${c}</span>`).join('');
+  /* ---- hero title, letter by letter (the hyphen gets the accent colour) ---- */
+  document.getElementById('title').innerHTML = [...'KAN-NIGHTA']
+    .map((c, i) => `<span class="${c === '-' ? 'hy' : ''}" style="animation-delay:${0.06 * i + 0.15}s">${c}</span>`)
+    .join('');
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  /* ---- the collection ---- */
   const GAMES = [
     {
       id: 'skargard', name: 'Skärgård', tag: 'Flight · Open world',
       blurb: 'Fly a to-scale rebuild of the Swedish archipelago around Timmernabben — every island, shoreline and skerry generated from real LiDAR elevation and OpenStreetMap data. Golden-hour light over 12km of open water, with VR support on Quest 3.',
       tags: ['Three.js', 'Real LiDAR + OSM', 'WebXR', 'To scale'],
-      url: 'https://skargard.vercel.app', live: true,
+      url: 'https://skargard.vercel.app',
     },
     {
       id: 'blacksite', name: 'Blacksite', tag: 'First-person shooter',
       blurb: 'A tactical shooter with zero external assets — every texture, mesh, animation and sound is generated procedurally in code at load time. Cascaded shadows, energy-based ballistics that punch through plywood but stop on concrete, and fully synthesised audio.',
       tags: ['Three.js', '100% procedural', 'PBR + CSM', 'Synthesised audio'],
-      url: 'https://javieranta.github.io/blacksite/', live: true,
+      url: 'https://blacksite.vercel.app',
     },
     {
       id: 'neon', name: 'Neon Grid', tag: 'Arcade · Synthwave',
       blurb: 'The maze chase reimagined on an endless neon plain — chrome sunset, wireframe mountains and four ghosts hunting you across a glowing grid. Pure eighties arcade energy rendered in 3D.',
       tags: ['Three.js', 'Synthwave', 'Arcade', 'Bloom'],
-      url: null, live: false,
+      url: 'https://neon-grid-3d.vercel.app',
     },
     {
       id: 'megeve', name: 'Alpine', tag: 'Ski simulation',
-      blurb: 'Ski the real Megève domain in Haute-Savoie, reconstructed from 1-metre IGN LiDAR and OSM piste data. The mountain under your skis is the actual mountain, down to the contour — with Mont Blanc on the horizon where it really sits.',
+      blurb: 'Ski the real Megève domain in Haute-Savoie, reconstructed from 1-metre IGN LiDAR and OSM piste data. Groomed corduroy, lift lines and tree runs on the actual shape of the mountain — with Mont Blanc on the horizon where it really sits.',
       tags: ['Three.js', 'IGN LiDAR 1m', 'Real terrain', 'First person'],
-      url: null, live: false,
+      url: 'https://megeve-ski.vercel.app',
     },
   ];
 
-  /**
-   * Screenshots are served from jsDelivr, which mirrors the public GitHub repo.
-   * That keeps the deployable surface to this one file, so the identical HTML
-   * works unchanged from the repo, from GitHub Pages and from Vercel — and the
-   * images come off a CDN either way. Swap to '/shots/' if you ever wire Vercel
-   * to the repo directly and want it fully self-hosted.
-   */
-  const CDN = 'https://cdn.jsdelivr.net/gh/javieranta/kannigtha@main/shots/';
-
   const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
+  /**
+   * The still, the title and the button all link to the game — a large image
+   * that looks clickable and is not is a small, avoidable annoyance, so the
+   * whole card surface goes to the same place.
+   */
   document.getElementById('list').innerHTML = GAMES.map((g, i) => `
     <article class="game">
       <div class="game-inner">
-        <div class="shot">
-          <span class="badge ${g.live ? '' : 'soon'}"><b></b>${g.live ? 'Live' : 'Coming soon'}</span>
-          <img src="${CDN}${g.id}.jpg" alt="${g.name} gameplay" loading="lazy" decoding="async" width="1280" height="720">
-        </div>
+        <a class="shot" href="${g.url}" target="_blank" rel="noopener" aria-label="Play ${g.name}">
+          <span class="badge"><b></b>Live</span>
+          <img src="shots/${g.id}.jpg" alt="${g.name} gameplay" loading="lazy" decoding="async" width="1040" height="585">
+          <span class="play-hint">Play ${ARROW}</span>
+        </a>
         <div class="copy">
           <div class="num">${String(i + 1).padStart(2, '0')} / 04</div>
-          <h3>${g.name}</h3>
+          <h3><a href="${g.url}" target="_blank" rel="noopener">${g.name}</a></h3>
           <div class="tagline">${g.tag}</div>
           <p>${g.blurb}</p>
           <div class="tags">${g.tags.map((t) => `<span class="tag">${t}</span>`).join('')}</div>
-          ${g.live
-            ? `<a class="cta" href="${g.url}" target="_blank" rel="noopener">Play now ${ARROW}</a>`
-            : `<span class="cta dead">In development</span>`}
+          <a class="cta" href="${g.url}" target="_blank" rel="noopener">Play now ${ARROW}</a>
         </div>
       </div>
     </article>`).join('');
@@ -294,7 +281,7 @@
   const hdr = document.getElementById('hdr');
   addEventListener('scroll', () => hdr.classList.toggle('stuck', scrollY > 40), { passive: true });
 
-  /* ---- pointer tilt on the stills (skipped on touch and reduced-motion) ---- */
+  /* ---- pointer tilt (skipped on touch and reduced-motion) ---- */
   const fine = matchMedia('(pointer:fine)').matches
     && !matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (fine) {
