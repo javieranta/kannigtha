@@ -59,17 +59,17 @@
 
   /* ----------------------------------- hero ----------------------------- */
   .hero{min-height:min(86svh,600px);display:flex;flex-direction:column;justify-content:flex-start;
-    padding:40px 0 40px;position:relative}
+    padding:40px 0 40px;position:relative;text-align:center}
   .eyebrow{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);
-    margin-bottom:26px;display:flex;align-items:center;gap:12px}
+    margin-bottom:26px;display:flex;align-items:center;justify-content:center;gap:12px}
   .eyebrow::after{content:"";height:1px;width:70px;background:linear-gradient(90deg,var(--amber),transparent)}
   /* The wordmark is artwork, not type. It is a black-backed render, so it is
      composited with screen blending — black contributes nothing and the glow
      sits on the backdrop instead of inside a visible box. */
   h1{margin:0 0 26px;line-height:0}
-  h1 img{display:block;width:min(100%,780px);height:auto;
+  h1 img{display:block;width:min(100%,780px);height:auto;margin-inline:auto;
     mix-blend-mode:screen;opacity:0;animation:fade 1.1s ease .2s forwards}
-  .lede{max-width:620px;font-size:clamp(16px,2vw,19px);color:var(--dim);
+  .lede{max-width:660px;margin-inline:auto;font-size:clamp(16px,2vw,19px);color:var(--dim);
     opacity:0;animation:fade 1s ease .75s forwards}
   .lede b{color:var(--ink);font-weight:600}
   @keyframes fade{to{opacity:1}}
