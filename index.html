@@ -148,9 +148,9 @@
   .cta:hover svg{transform:translateX(3px)}
 
   /* --------------------------------- footer ----------------------------- */
-  footer{border-top:1px solid var(--line);padding:52px 0 64px;color:var(--faint);font-size:12.5px}
-  .foot{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:center}
-  .note{margin-top:18px;font-size:11.5px;color:var(--faint);max-width:64ch;line-height:1.7}
+  footer{border-top:1px solid var(--line);padding:44px 0 52px;color:var(--dim)}
+  .foot{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap;align-items:center;
+    font-size:15px;letter-spacing:.02em}
 
   @media (prefers-reduced-motion: reduce){
     *,*::after,*::before{animation:none!important;transition-duration:.01ms!important}
@@ -189,12 +189,7 @@
 </main>
 
 <footer><div class="wrap">
-  <div class="foot"><div>© <span id="yr"></span> Kan-Nighta — built with Three.js</div></div>
-  <p class="note">
-    Best on a desktop browser with a discrete GPU — Chrome or Edge. These are real-time
-    renderers, not videos: the first load compiles shaders and generates textures, so give
-    them a moment. Touch controls are not implemented, so a phone will render but not play.
-  </p>
+  <div class="foot"><div>© <span id="yr"></span> Kan-Nighta</div></div>
 </div></footer>
 
 <script>
