@@ -4,10 +4,10 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>KAN-NIGHTA — worlds built in a browser</title>
-<meta name="description" content="Four real-time 3D worlds running in a browser: a Swedish archipelago, a procedural shooter, a synthwave arcade grid, and the Megève ski domain. Built with Three.js and WebGL2." />
+<meta name="description" content="Five real-time 3D worlds running in a browser: a Caribbean treasure hunt, a Swedish archipelago, a procedural shooter, a synthwave arcade grid, and the Megève ski domain. Built with Three.js." />
 <meta property="og:title" content="KAN-NIGHTA — worlds built in a browser" />
-<meta property="og:description" content="Four real-time 3D worlds running in a browser. No installs, no downloads." />
-<meta property="og:image" content="shots/skargard.jpg" />
+<meta property="og:description" content="Five real-time 3D worlds running in a browser. No installs, no downloads." />
+<meta property="og:image" content="shots/cayo.jpg" />
 <meta name="theme-color" content="#07090d" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>" />
 <style>
@@ -180,13 +180,14 @@
     <div class="eyebrow">Real-time 3D · in a browser tab</div>
     <h1 id="title"></h1>
     <p class="lede">
-      Four worlds that run on <b>WebGL2</b> with nothing to install — a Swedish archipelago
-      rebuilt from LiDAR, a shooter whose every texture is generated in code, a synthwave
-      arcade grid, and a ski simulation of a real alpine domain.
+      Five worlds that run in a browser tab with nothing to install — a Caribbean treasure
+      hunt on <b>WebGPU</b>, a Swedish archipelago rebuilt from LiDAR, a shooter whose every
+      texture is generated in code, a synthwave arcade grid, and a ski simulation of a real
+      alpine domain.
     </p>
     <div class="stats">
-      <div class="stat"><div class="n">4</div><div class="l">Worlds</div></div>
-      <div class="stat"><div class="n">4</div><div class="l">Playable now</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">Worlds</div></div>
+      <div class="stat"><div class="n">5</div><div class="l">Playable now</div></div>
       <div class="stat"><div class="n">0</div><div class="l">Installs</div></div>
       <div class="stat"><div class="n">100%</div><div class="l">Browser</div></div>
     </div>
@@ -194,7 +195,7 @@
   </div></section>
 
   <section id="games"><div class="wrap">
-    <div class="section-head"><h2>The Collection</h2><span class="count">04 titles</span></div>
+    <div class="section-head"><h2>The Collection</h2><span class="count" id="count"></span></div>
     <div class="games" id="list"></div>
   </div></section>
 </main>
@@ -216,6 +217,12 @@
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   const GAMES = [
+    {
+      id: 'cayo', name: 'Cayo Perdido', tag: 'Treasure hunt · Open island',
+      blurb: 'Somewhere on a Caribbean cay, under nearly forty thousand palms, a chest is buried — and all you have is a hand-drawn map, a handful of digs and a parrot who knows more than he lets on. Rebuilt from a seed on every visit and rendered on WebGPU: a real FFT ocean, a volumetric sky, and weather that runs from tropical noon to a full storm.',
+      tags: ['Three.js', 'WebGPU', 'FFT ocean', 'Seeded island'],
+      url: 'https://cayo-perdido.vercel.app',
+    },
     {
       id: 'skargard', name: 'Skärgård', tag: 'Flight · Open world',
       blurb: 'Fly a to-scale rebuild of the Swedish archipelago around Timmernabben — every island, shoreline and skerry generated from real LiDAR elevation and OpenStreetMap data. Golden-hour light over 12km of open water, with VR support on Quest 3.',
@@ -242,6 +249,9 @@
     },
   ];
 
+  const TOTAL = String(GAMES.length).padStart(2, '0');
+  document.getElementById('count').textContent = `${TOTAL} titles`;
+
   const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
   /**
@@ -258,7 +268,7 @@
           <span class="play-hint">Play ${ARROW}</span>
         </a>
         <div class="copy">
-          <div class="num">${String(i + 1).padStart(2, '0')} / 04</div>
+          <div class="num">${String(i + 1).padStart(2, '0')} / ${TOTAL}</div>
           <h3><a href="${g.url}" target="_blank" rel="noopener">${g.name}</a></h3>
           <div class="tagline">${g.tag}</div>
           <p>${g.blurb}</p>
