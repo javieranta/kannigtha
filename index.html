@@ -57,25 +57,22 @@
   @media(max-width:700px){.nav-links{display:none}}
 
   /* ----------------------------------- hero ----------------------------- */
-  .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
-    padding:120px 0 80px;position:relative}
+  .hero{min-height:min(100svh,720px);display:flex;flex-direction:column;justify-content:center;
+    padding:104px 0 44px;position:relative}
   .eyebrow{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);
     margin-bottom:26px;display:flex;align-items:center;gap:12px}
   .eyebrow::after{content:"";height:1px;width:70px;background:linear-gradient(90deg,var(--amber),transparent)}
-  h1{font-family:var(--f-dis);font-weight:700;text-transform:uppercase;
-    font-size:clamp(46px,11.5vw,150px);line-height:.88;letter-spacing:-.015em;margin-bottom:30px}
-  h1 span{display:inline-block;opacity:0;transform:translateY(.34em) rotate(2deg);
-    animation:rise .9s cubic-bezier(.19,1,.22,1) forwards}
-  h1 .hy{color:var(--amber)}
-  @keyframes rise{to{opacity:1;transform:none}}
+  /* The wordmark is artwork, not type. It is a black-backed render, so it is
+     composited with screen blending — black contributes nothing and the glow
+     sits on the backdrop instead of inside a visible box. */
+  h1{margin:0 0 26px;line-height:0}
+  h1 img{display:block;width:min(100%,780px);height:auto;
+    mix-blend-mode:screen;opacity:0;animation:fade 1.1s ease .2s forwards}
   .lede{max-width:620px;font-size:clamp(16px,2vw,19px);color:var(--dim);
     opacity:0;animation:fade 1s ease .75s forwards}
   .lede b{color:var(--ink);font-weight:600}
   @keyframes fade{to{opacity:1}}
-  .stats{display:flex;gap:44px;margin-top:52px;flex-wrap:wrap;opacity:0;animation:fade 1s ease 1s forwards}
-  .stat .n{font-family:var(--f-dis);font-size:34px;font-weight:600;line-height:1;color:var(--ink)}
-  .stat .l{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);margin-top:8px}
-  .scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  .scroll-cue{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
     font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);
     opacity:0;animation:fade 1s ease 1.4s forwards}
   .scroll-cue::after{content:"";display:block;width:1px;height:34px;margin:12px auto 0;
@@ -84,7 +81,7 @@
 
   /* ---------------------------------- cards ----------------------------- */
   .section-head{display:flex;align-items:baseline;justify-content:space-between;
-    margin:0 0 44px;padding-top:30px;border-top:1px solid var(--line)}
+    margin:0 0 40px;padding-top:26px;border-top:1px solid var(--line)}
   .section-head h2{font-family:var(--f-dis);font-size:13px;font-weight:600;
     letter-spacing:.34em;text-transform:uppercase;color:var(--dim)}
   .section-head .count{font-size:11px;letter-spacing:.2em;color:var(--faint)}
@@ -160,8 +157,8 @@
   @media (prefers-reduced-motion: reduce){
     *,*::after,*::before{animation:none!important;transition-duration:.01ms!important}
     .game{opacity:1;transform:none}
-    h1 span{opacity:1;transform:none}
-    .lede,.stats,.scroll-cue{opacity:1}
+    h1 img{opacity:1}
+    .lede,.scroll-cue{opacity:1}
   }
 </style>
 </head>
@@ -178,19 +175,13 @@
 <main>
   <section class="hero"><div class="wrap">
     <div class="eyebrow">Real-time 3D · in a browser tab</div>
-    <h1 id="title"></h1>
+    <h1><img src="shots/logo.webp" alt="Kan-Nighta Studios" width="1600" height="472" fetchpriority="high" decoding="async"></h1>
     <p class="lede">
-      Five worlds that run in a browser tab with nothing to install — a Caribbean treasure
-      hunt on <b>WebGPU</b>, a Swedish archipelago rebuilt from LiDAR, a shooter whose every
-      texture is generated in code, a synthwave arcade grid, and a ski simulation of a real
-      alpine domain.
+      Five worlds that run in a browser tab with <b>nothing to install</b> — a Caribbean
+      treasure hunt, a Swedish archipelago rebuilt from real-world geographic data, a shooter
+      whose every texture is generated in code, a synthwave arcade grid, and a ski simulation
+      of a real alpine domain.
     </p>
-    <div class="stats">
-      <div class="stat"><div class="n">5</div><div class="l">Worlds</div></div>
-      <div class="stat"><div class="n">5</div><div class="l">Playable now</div></div>
-      <div class="stat"><div class="n">0</div><div class="l">Installs</div></div>
-      <div class="stat"><div class="n">100%</div><div class="l">Browser</div></div>
-    </div>
     <div class="scroll-cue">Scroll</div>
   </div></section>
 
@@ -210,10 +201,6 @@
 </div></footer>
 
 <script>
-  /* ---- hero title, letter by letter (the hyphen gets the accent colour) ---- */
-  document.getElementById('title').innerHTML = [...'KAN-NIGHTA']
-    .map((c, i) => `<span class="${c === '-' ? 'hy' : ''}" style="animation-delay:${0.06 * i + 0.15}s">${c}</span>`)
-    .join('');
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   const GAMES = [
