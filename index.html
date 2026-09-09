@@ -62,7 +62,10 @@
     padding:40px 0 40px;position:relative;text-align:center}
   .eyebrow{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);
     margin-bottom:26px;display:flex;align-items:center;justify-content:center;gap:12px}
-  .eyebrow::after{content:"";height:1px;width:70px;background:linear-gradient(90deg,var(--amber),transparent)}
+  /* mirrored rules now that the lockup is centred */
+  .eyebrow::before,.eyebrow::after{content:"";height:1px;width:70px}
+  .eyebrow::before{background:linear-gradient(270deg,var(--amber),transparent)}
+  .eyebrow::after{background:linear-gradient(90deg,var(--amber),transparent)}
   /* The wordmark is artwork, not type. It is a black-backed render, so it is
      composited with screen blending — black contributes nothing and the glow
      sits on the backdrop instead of inside a visible box. */
