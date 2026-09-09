@@ -58,8 +58,8 @@
   @media(max-width:700px){.nav-links{display:none}}
 
   /* ----------------------------------- hero ----------------------------- */
-  .hero{min-height:min(86svh,600px);display:flex;flex-direction:column;justify-content:flex-start;
-    padding:40px 0 40px;position:relative;text-align:center}
+  .hero{display:flex;flex-direction:column;justify-content:flex-start;
+    padding:40px 0 30px;position:relative;text-align:center}
   .eyebrow{font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--amber);
     margin-bottom:26px;display:flex;align-items:center;justify-content:center;gap:12px}
   /* mirrored rules now that the lockup is centred */
@@ -76,12 +76,6 @@
     opacity:0;animation:fade 1s ease .75s forwards}
   .lede b{color:var(--ink);font-weight:600}
   @keyframes fade{to{opacity:1}}
-  .scroll-cue{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
-    font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);
-    opacity:0;animation:fade 1s ease 1.4s forwards}
-  .scroll-cue::after{content:"";display:block;width:1px;height:34px;margin:12px auto 0;
-    background:linear-gradient(var(--faint),transparent);animation:pulse 2.2s ease-in-out infinite}
-  @keyframes pulse{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
 
   /* ---------------------------------- cards ----------------------------- */
   .section-head{display:flex;align-items:baseline;justify-content:space-between;
@@ -162,7 +156,7 @@
     *,*::after,*::before{animation:none!important;transition-duration:.01ms!important}
     .game{opacity:1;transform:none}
     h1 img{opacity:1}
-    .lede,.scroll-cue{opacity:1}
+    .lede{opacity:1}
   }
 </style>
 </head>
@@ -186,7 +180,6 @@
       whose every texture is generated in code, a synthwave arcade grid, and a ski simulation
       of a real alpine domain.
     </p>
-    <div class="scroll-cue">Scroll</div>
   </div></section>
 
   <section id="games"><div class="wrap">
